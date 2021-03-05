@@ -5,6 +5,8 @@
 export * from './lib/ngx-scrollspy.service';
 export * from './lib/ngx-scrollspy.component';
 export * from './lib/ngx-scrollspy.module';
+export * from './lib/core/element.directive';
+export * from './lib/core/window.directive';
 
 export * from './lib/scrollSpy/index.directive'
 export * from './lib/scrollSpy/index.component'

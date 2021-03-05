@@ -13,6 +13,7 @@ import { ScrollSpyService } from '../core/service';
 export interface ScrollSpyAffixOptions {
   topMargin?: number;
   bottomMargin?: number;
+  scrollRef?: string;
 }
 
 @Injectable()
@@ -35,7 +36,8 @@ export class ScrollSpyAffixDirective implements AfterViewInit, OnDestroy {
 
   public defaultOptions: ScrollSpyAffixOptions = {
     topMargin: 0,
-    bottomMargin: 0
+    bottomMargin: 0,
+    scrollRef: 'window'
   };
 
   public scrollStream$: any;
@@ -62,17 +64,12 @@ export class ScrollSpyAffixDirective implements AfterViewInit, OnDestroy {
     this.elementTop = this.parentEl.scrollTop;
     this.elementBottom = this.elementTop + this.parentEl.getBoundingClientRect().height;
 
-    if (!!this.scrollSpy.getObservable('window')) {
+    if (!!this.scrollSpy.getObservable(this.options.scrollRef)) {
       // TODO: Remove setTimeout once: https://github.com/angular/angular/issues/7443
-      this.scrollStream$ = this.scrollSpy.getObservable('window').subscribe((e: any) => {
-        if (typeof e.target.scrollingElement !== 'undefined') {
-          setTimeout(() => this.update(e.target.scrollingElement.scrollTop));
-        } else if (typeof e.target.scrollY !== 'undefined') {
-          setTimeout(() => this.update(e.target.scrollY));
-        } else if (typeof e.target.pageYOffset !== 'undefined') {
-          setTimeout(() => this.update(e.target.pageYOffset));
-        } else if(e.target.parentWindow && e.target.parentWindow.pageYOffset) {
-          setTimeout(() => this.update(e.target.parentWindow.pageYOffset));
+      this.scrollStream$ = this.scrollSpy.getObservable(this.options.scrollRef).subscribe((e: Event) => {
+        const el = e.target as HTMLElement;
+        if (el.scrollHeight > el.clientHeight) {
+          setTimeout(() => this.update(el.scrollTop));
         }
       });
     }
