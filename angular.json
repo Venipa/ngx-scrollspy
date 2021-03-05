@@ -3,5 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "ngx-scrollspy": {
+      "projectType": "library",
+      "root": "projects/ngx-scrollspy",
+      "sourceRoot": "projects/ngx-scrollspy/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ngx-scrollspy/tsconfig.lib.json",
+            "project": "projects/ngx-scrollspy/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-scrollspy/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-scrollspy/src/test.ts",
+            "tsConfig": "projects/ngx-scrollspy/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-scrollspy/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-scrollspy/tsconfig.lib.json",
+              "projects/ngx-scrollspy/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-scrollspy"
 }

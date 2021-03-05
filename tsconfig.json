@@ -10,6 +10,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "ngx-scrollspy": [
+        "dist/ngx-scrollspy/ngx-scrollspy",
+        "dist/ngx-scrollspy"
+      ]
+    },
     "target": "es2015",
     "module": "es2020",
     "lib": [
